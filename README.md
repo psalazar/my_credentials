@@ -4,6 +4,8 @@
 
 It uses AES-128-GCM encryption via `ActiveSupport::EncryptedFile` to protect API keys, tokens, passwords, and more.
 
+> ⚠️ **Experimental** – This gem was originally built for internal use. It's simple and may not cover every use case. Use at your own discretion.
+
 ---
 
 ## Features
@@ -22,7 +24,7 @@ It uses AES-128-GCM encryption via `ActiveSupport::EncryptedFile` to protect API
 Add the gem to your `Gemfile`:
 
 ```ruby
-gem "my_credentials", path: "../path/to/the/gem"
+gem "my_credentials", path: "../path/to/gem"
 ```
 
 Then run:
@@ -141,3 +143,9 @@ openssl rand -hex 16 > config/credentials/development.key
 
 - `Rails.application.credentials`
 - `ActiveSupport::EncryptedFile`
+
+---
+
+## License
+
+MIT License © 2025 Pablo Salazar
