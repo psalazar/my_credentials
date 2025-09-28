@@ -1,31 +1,31 @@
 # MyCredentials
 
-🔐 **MyCredentials** es una gema para manejar variables sensibles de forma segura en aplicaciones Ruby, similar a `Rails.credentials` pero independiente de Rails.
+🔐 **MyCredentials** is a Ruby gem for securely managing sensitive variables, similar to `Rails.credentials`, but completely independent from Rails.
 
-Utiliza cifrado AES-256-GCM mediante `ActiveSupport::EncryptedFile` para proteger claves API, tokens, contraseñas y más.
-
----
-
-## Características
-
-- 🔒 Cifrado seguro con claves por entorno
-- 📄 Archivos `.yml.enc` por entorno (`development`, `production`, etc.)
-- 🗝️ Genera automáticamente la clave `.key` si no existe
-- 🧪 Compatible con cualquier aplicación Ruby (no requiere Rails)
-- 🧰 Acceso tipo hash: `MyCredentials[:api_key]`
-- 📝 Editor interactivo para modificar credenciales (`MyCredentials.edit(:env)`)
+It uses AES-256-GCM encryption via `ActiveSupport::EncryptedFile` to protect API keys, tokens, passwords, and more.
 
 ---
 
-## Instalación
+## Features
 
-Agrega la gema a tu `Gemfile`:
+- 🔒 Secure encryption with per-environment keys
+- 📄 `.yml.enc` files per environment (`development`, `production`, etc.)
+- 🗝️ Automatically generates the `.key` file if missing
+- 🧪 Works in any Ruby app (no Rails required)
+- 🧰 Hash-style access: `MyCredentials[:api_key]`
+- 📝 Interactive editor to modify credentials (`MyCredentials.edit(:env)`)
+
+---
+
+## Installation
+
+Add the gem to your `Gemfile`:
 
 ```ruby
-gem "my_credentials", path: "../ruta/a/la/gema"
+gem "my_credentials", path: "../path/to/the/gem"
 ```
 
-Luego ejecuta:
+Then run:
 
 ```bash
 bundle install
@@ -33,25 +33,25 @@ bundle install
 
 ---
 
-## Uso básico
+## Basic Usage
 
-### Crear las credenciales
+### Create credentials
 
-Desde consola o script:
+From the terminal or a script:
 
 ```bash
 EDITOR=vim mycredentials edit --environment staging
 ```
 
-Este comando:
+This command:
 
-- Crea `config/credentials/development.key` si no existe
-- Crea `config/credentials/development.yml.enc` si no existe
-- Abre el archivo desencriptado en el editor configurado (`$EDITOR` o `vim`)
+- Creates `config/credentials/development.key` if it doesn't exist
+- Creates `config/credentials/development.yml.enc` if it doesn't exist
+- Opens the decrypted file in your configured editor (`$EDITOR` or `vim`)
 
 ---
 
-### Leer variables
+### Read variables
 
 ```ruby
 require "my_credentials"
@@ -62,25 +62,25 @@ mailgun_domain = MyCredentials[:mailgun][:domain]
 
 ---
 
-## Configuración (opcional)
+## Configuration (optional)
 
-Si necesitas personalizar la ruta o el entorno:
+If you need to customize the path or environment:
 
 ```ruby
 MyCredentials.configure do |config|
-  config.secrets_path = "config/credentials"  # Ruta base para archivos
-  config.env = "production"               # Entorno a usar
+  config.secrets_path = "config/credentials"  # Base path for files
+  config.env = "production"                   # Environment to use
 end
 ```
 
-Si no configuras nada, se usan por defecto:
+If not configured, the defaults are:
 
-- Ruta: `config/credentials/`
-- Entorno: detectado desde `ENV["MYC_ENV"]`, `ENV["RACK_ENV"]`, `ENV["APP_ENV"]` o `"development"`
+- Path: `config/credentials/`
+- Environment: determined from `ENV["MYC_ENV"]`, `ENV["RACK_ENV"]`, `ENV["APP_ENV"]`, or `"development"`
 
 ---
 
-## Estructura esperada
+## Expected File Structure
 
 ```
 config/credentials/
@@ -90,26 +90,26 @@ config/credentials/
 ├── production.key
 ```
 
-El archivo `.key` debe mantenerse **fuera del control de versiones**.
+The `.key` file should be kept **out of version control**.
 
 ---
 
-## Seguridad
+## Security
 
-### No subas tus claves al repositorio
+### Never commit your key files
 
-Agrega a tu `.gitignore`:
+Add this to your `.gitignore`:
 
 ```
-# Claves de my_credentials
+# MyCredentials key files
 /config/credentials/*.key
 ```
 
-También puedes usar la variable de entorno `MYC_MASTER_KEY` para evitar almacenar la clave en disco.
+You can also use the `MYC_MASTER_KEY` environment variable instead of storing the key on disk.
 
 ---
 
-## Ejemplo de archivo desencriptado
+## Example decrypted file
 
 ```yaml
 api_key: abc123
@@ -120,16 +120,16 @@ mailgun:
 
 ---
 
-## Requisitos
+## Requirements
 
 - Ruby >= 3.1
 - `activesupport` >= 8.0
 
 ---
 
-## Generar clave manualmente
+## Generate key manually
 
-Si quieres generar la clave manualmente:
+If you'd rather generate the key manually:
 
 ```bash
 openssl rand -hex 16 > config/credentials/development.key
@@ -137,9 +137,7 @@ openssl rand -hex 16 > config/credentials/development.key
 
 ---
 
-## Inspiración
+## Inspiration
 
 - `Rails.application.credentials`
 - `ActiveSupport::EncryptedFile`
-
----
