@@ -4,6 +4,8 @@ require "fileutils"
 
 module MyCredentials
   module Editor
+    DEFAULT_EDITOR = "vim".freeze
+
     def self.edit(env)
       ensure_key_exists(env)
       ensure_encrypted_file_exists(env)
@@ -14,8 +16,10 @@ module MyCredentials
         tmp.write(encrypted_file.read || "")
         tmp.flush
 
+        editor = ENV["EDITOR"] || DEFAULT_EDITOR
+        puts "[my_credentials] 📝 No $EDITOR set. Using default: #{DEFAULT_EDITOR}" unless ENV["EDITOR"]
         puts "Editing #{encrypted_file.content_path}..."
-        system("#{ENV['EDITOR'] || 'nano'} #{tmp.path}")
+        system("#{editor} #{tmp.path}")
 
         new_content = File.read(tmp.path)
         encrypted_file.write(new_content)
@@ -33,7 +37,7 @@ module MyCredentials
       puts "[my_credentials] 🔑 Key generated in #{path}"
       puts "[my_credentials] 📌 Added 128-bit key (AES-128-GCM)"
       if env == "production"
-        puts "[my_credentials] ⚠️ For security, remember to add config/secrets/production.key to your .gitignore"
+        puts "[my_credentials] ⚠️ For security, remember to add config/credentials/production.key to your .gitignore"
       end
     end
 

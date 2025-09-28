@@ -40,14 +40,14 @@ bundle install
 Desde consola o script:
 
 ```bash
-bundle exec ruby -rmy_credentials -e "MyCredentials.edit(:development)"
+EDITOR=vim mycredentials edit --environment staging
 ```
 
 Este comando:
 
 - Crea `config/credentials/development.key` si no existe
 - Crea `config/credentials/development.yml.enc` si no existe
-- Abre el archivo desencriptado en el editor configurado (`$EDITOR` o `nano`)
+- Abre el archivo desencriptado en el editor configurado (`$EDITOR` o `vim`)
 
 ---
 

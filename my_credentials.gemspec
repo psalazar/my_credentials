@@ -33,4 +33,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "activesupport", "~> 8.0"
+
+  spec.executables << "mycredentials"
+  spec.bindir = "exe"
 end
