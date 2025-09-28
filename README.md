@@ -2,7 +2,7 @@
 
 🔐 **MyCredentials** is a Ruby gem for securely managing sensitive variables, similar to `Rails.credentials`, but completely independent from Rails.
 
-It uses AES-256-GCM encryption via `ActiveSupport::EncryptedFile` to protect API keys, tokens, passwords, and more.
+It uses AES-128-GCM encryption via `ActiveSupport::EncryptedFile` to protect API keys, tokens, passwords, and more.
 
 ---
 
